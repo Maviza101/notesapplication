@@ -14,8 +14,7 @@ NotesApplication.prototype.listNotes = function () {
       console.log("Note ID: "+i+"\n"+\
                   this.list_of_notes[i]+"\n\n"+\
                   "By Author "+this.author
-                  
-                 );
+                  );
     }
   }
 }
