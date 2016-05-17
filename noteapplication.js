@@ -13,12 +13,19 @@ NotesApplication.prototype.listNotes = function () {
     for(i=0; i < this.list_of_notes.length; i++) {
       console.log("Note ID: "+i+"\n"+\
                   this.list_of_notes[i]+"\n\n"+\
-                  "By Author "+this.author
-                  );
+                  "By Author "+this.author);
     }
   }
 };
 
 NotesApplication.prototype.get = function (note_id) {
   return this.list_of_notes[note_id];
+};
+
+NotesApplication.prototype.delete = function (note_id) {
+  this.list_of_notes.
+};
+
+NotesApplication.prototype.edit = function(note_id, new_content){
+  this.list_of_notes[note_id] = new_content;
 };
