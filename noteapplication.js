@@ -17,4 +17,8 @@ NotesApplication.prototype.listNotes = function () {
                   );
     }
   }
-}
+};
+
+NotesApplication.prototype.getNotes = function (note_id) {
+  return this.list_of_notes[note_id];
+};
