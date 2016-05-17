@@ -23,7 +23,9 @@ NotesApplication.prototype.get = function (note_id) {
 };
 
 NotesApplication.prototype.delete = function (note_id) {
-  this.list_of_notes.
+  if (note_id > -1) {
+    this.list_of_notes.splice(note_id, 1);
+  }
 };
 
 NotesApplication.prototype.edit = function(note_id, new_content){
