@@ -21,6 +21,48 @@ NotesApplication.prototype.listNotes = function () {
   }
 };
 
+NotesApplication.prototype.search = function (query_string) {
+  if(typeof query_string === 'string' && query_string !== '') {
+    matched_notes = [];
+    for(i=0; i < this.list_of_notes.length; i++) {
+      if( contains(this.get(i), query_string) ) {
+        matched_notes.push(i);
+      }
+    }
+    console.log('Showing results for search query: ' + query_string);
+    if (matched_notes === []) console.log('No matches found.');
+    else {
+      for(i=0; i < matched_notes.length; i++) {
+        this.get(matched_notes[i]);
+      }
+    }
+  }
+  else {
+     console.log('Error! Argument must be a non-empty string.');
+    }
+};
+
+
+function contains(to_search, query) {
+  var first_char = query[0];
+  var is_found = false;
+  for(i=0; i < to_search.length; i++) {
+    if (to_search[i] === first_char) {
+      var j = 1;
+      while (j < query.length) {
+        if ( to_search[i+1] === query[j] ) continue;
+        if ( j == query.length) {
+          is_found = true;
+
+        }
+      }
+    }
+    if(is_found) break;
+  }
+  return is_found;
+}
+
+
 NotesApplication.prototype.get = function (note_id) {
   if(isPositiveInt(note_id)) {
     if(note_id < this.list_of_notes.length) {
