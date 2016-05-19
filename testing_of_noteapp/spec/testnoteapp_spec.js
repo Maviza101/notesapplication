@@ -46,19 +46,29 @@ describe("An app for taking notes", function() {
   //test some notes
   na.create('Second');
   num_of_notes++;
-  it('should print Second', function() {
-    expect(na.list_of_notes[1]).toBe('Second');
+  it('should contain two notes', function() {
+    expect(na.list_of_notes.length).toBe(num_of_notes);
   });
   
-  na.edit(0, 'Firstly');
-  it('should print Firstly', function() {
-    expect(na.list_of_notes[0]).toBe('Firstly');
+  na.edit(1, 'Secondly');
+  it('should contain Secondly', function() {
+    expect(na.list_of_notes[1]).toBe('Secondly');
   });
   
-  na.delete(0);
-  num_of_notes--;
-  it('should be 1 note', function() {
-    expect(na.list_of_notes.length).toBe(1);
+  na.create('Third');
+  num_of_notes++;
+  it('should contain Third', function() {
+    expect(na.list_of_notes.length).toBe(num_of_notes);
   });
+  
+  na.edit(2, 'Thirdly');
+  it('should contain Thirdly', function() {
+    expect(na.list_of_notes[2]).toBe('Thirdly');
+  });
+  
+  
+  
+  
 
 });
+``
