@@ -66,6 +66,18 @@ describe("An app for taking notes", function() {
     expect(na.list_of_notes[2]).toBe('Thirdly');
   });
   
+  //calling create() or edit() with invalid arguments should leave list_of_notes unchanged
+  
+  na.create(false);
+  it('should contain Third', function() {
+    expect(na.list_of_notes.length).toBe(num_of_notes);
+  });
+  
+  na.edit(2, false);
+  it('should contain Thirdly', function() {
+    expect(na.list_of_notes[2]).toBe('Thirdly');
+  });
+  
   
   
   
