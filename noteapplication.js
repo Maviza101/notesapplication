@@ -1,27 +1,30 @@
-
-
 function NotesApplication(author) {
   this.author = author;
   this.list_of_notes = [];
 }
 
-NotesApplication.prototype.create = function (note_content) {
+NotesApplication.prototype.create = function(note_content) {
   if(typeof note_content === 'string' && note_content !== '') {
     this.list_of_notes.push(note_content);
   }
-  else {console.log('Error! Argument has to be a non-empty string.');}
+  else {return('Error! Argument has to be a non-empty string.');}
 };
 
-NotesApplication.prototype.listNotes = function () {
-  if(this.list_of_notes == []) {console.log( "There are no notes in this list.");}
+NotesApplication.prototype.listNotes = function() {
+  if(this.list_of_notes == []) {
+    return( "There are no notes in this list.");
+  }
   else {
+    /*return all the notes in list_of_notes as a string*/
+    var all_notes = '';
   	for(i=0; i < this.list_of_notes.length; i++) {
-      console.log("Note ID: "+ i +"\n" + this.list_of_notes[i]+"\n\n"  +  "By Author "+this.author +'\n');
+      all_notes += "Note ID: "+ i +"\n" + this.list_of_notes[i]+"\n\n"  +  "By Author "+this.author +'\n\n';
     }
+    return all_notes;
   }
 };
 
-NotesApplication.prototype.search = function (query_string) {
+NotesApplication.prototype.search = function(query_string) {
   if(typeof query_string === 'string' && query_string !== '') {
     matched_notes = [];
     for(i=0; i < this.list_of_notes.length; i++) {
@@ -29,8 +32,8 @@ NotesApplication.prototype.search = function (query_string) {
         matched_notes.push(i);
       }
     }
-    console.log('Showing results for search query: ' + query_string);
-    if (matched_notes === []) console.log('No matches found.');
+    return('Showing results for search query: ' + query_string);
+    if (matched_notes === []) return('No matches found.');
     else {
       for(i=0; i < matched_notes.length; i++) {
         this.get(matched_notes[i]);
@@ -38,9 +41,61 @@ NotesApplication.prototype.search = function (query_string) {
     }
   }
   else {
-     console.log('Error! Argument must be a non-empty string.');
+     return('Error! Argument must be a non-empty string.');
     }
 };
+
+NotesApplication.prototype.get = function(note_id) {
+  if(isPositiveInt(note_id)) {
+    if(note_id < this.list_of_notes.length) {
+      return(this.list_of_notes[note_id]);
+    }
+    else {
+      return('Error! Argument is more than the total number of notes stored.');
+    }
+  }
+  
+  else {
+    return('Error! Argument has to be an integer > -1.');
+  }
+};
+
+/*
+method delete() requires some thought, coz if we delete note x, we 
+need to decrement the index of all the notes to its right, and consequently,
+their note_id. Thankfully, how I used splice() takes care of that.
+*/
+NotesApplication.prototype.delete = function(note_id) {
+  if(isPositiveInt(note_id)) {
+    if (note_id < this.list_of_notes.length) {
+      this.list_of_notes.splice(note_id, 1);
+    }
+    else {
+      return('Error! Argument is more than the total number of notes stored.');
+    }
+  }
+  else {
+    return('Error! Argument has to be an integer > -1.');
+  }
+};
+
+NotesApplication.prototype.edit = function(note_id, new_content){
+  if(isPositiveInt(note_id) && typeof new_content === 'string') {
+  	if (note_id < this.list_of_notes.length) {
+      this.list_of_notes[note_id] = new_content;
+  	}
+    else {
+      return('Error! Argument is more than the total number of notes stored.');
+    }
+  }
+  else {
+    return('Supplied arguments are of the wrong types (should be a positive int and string respectively).');
+  }
+};
+
+
+/*all helper/worker functions below*/
+
 
 
 function contains(to_search, query) {
@@ -61,41 +116,6 @@ function contains(to_search, query) {
   }
   return is_found;
 }
-
-
-NotesApplication.prototype.get = function (note_id) {
-  if(isPositiveInt(note_id)) {
-    if(note_id < this.list_of_notes.length) {
-      console.log(this.list_of_notes[note_id]);
-    }
-    else {console.log('Error! There is no note with the supplied ID.');}
-  }
-  else {console.log('Error! Argument has to be an integer > -1.');}
-};
-
-NotesApplication.prototype.delete = function (note_id) {
-  if(isPositiveInt(note_id)) {
-    if (note_id < this.list_of_notes.length) {
-      this.list_of_notes.splice(note_id, 1);
-    }
-    else {console.log('Error! There is no note with the supplied ID.');}
-  }
-  else {console.log('Error! Argument has to be an integer > -1.');}
-};
-
-NotesApplication.prototype.edit = function(note_id, new_content){
-  if(isPositiveInt(note_id) && typeof new_content === 'string') {
-  	if (note_id < this.list_of_notes.length) {
-      this.list_of_notes[note_id] = new_content;
-  	}
-    else {console.log('Error! There is no note with the supplied ID.');}
-  }
-  else {console.log('supplied arguments are of the wrong types(should be int and string respectively');}
-};
-
-
-
-
 
 function isPositiveInt(test_num) {
   if(typeof test_num === 'number' && test_num % 1 === 0 && test_num > -1 ) {return true;}
